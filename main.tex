@@ -1532,11 +1532,6 @@ In Table \ref{nbSolved}, we give the number of instances that have been proved s
 
 In total, with the PQZ bound, we are able to solve 4370 instances over 4500, against 4248 instances for the corrected bound. The results are very comparable, even if the PQZ bound seems slightly better than its correction.
 
-%------------ Tables Nb Solved --------------
-\input{benchs/tableNbSolved/nbSolved_p1.tex}
-
-\input{benchs/tableNbSolved/nbSolved_p075.tex}
-
 % In Table \ref{nbBacktracks} and Table \ref{resolutionTimes}, we present the number of backtracks and resolution times (in s) that have been required in average to solve each instance. It seems that the PQZ estimator performs slightly better than its correction in average. If we look at the couple $(\tau = 0.6, n_C = 8)$, the corrected bound needed less backtracks and less time to solve the corresponding instances, but globally, it does not seem like one estimator outperforms the other one. 
 
 We now focus only on the instances that have been solved by both estimators. In Figure \ref{benchCloudPoints}a we compare the required number of backtracks for each instance that have been solved (proved satisfiable or unsatisfiable) with both estimators. Blue dots represent the satisfiable instances and red ones represent the unsatisfiable instances. We observe that there are a lot of red dots near the first bisector, which means that unsatisfiable instances roughly require the same number of backtracks with both estimators. For 80\% of the unsatisfiable instances, the ratio of the number of backtracks between the two estimators is inferior to 3.1 (inside the interval delimited by dots on Fig. \ref{benchCloudPoints}). %The blue dots are nearly equally distributed on both sides of the bisector. 
@@ -1556,79 +1551,6 @@ Our conclusions on this benchmark are the following. As a preliminary remark, bo
 We observe that the heuristic based on the PQZ estimator pushes the search to choose different assignments of our correction based on an upper bound (cf Figures~\ref{similarityLenghtCommonPrefix} and~\ref{similarityWCS}). We assume that the quality of the PQZ results on the SAT instances is probably related to the fact that the artificial amplification of the PQZ estimator, to choose some assignment, still pushes the search into areas that most likely contain at least one solution.
 %
 However, in the end, no heuristic clearly dominates the other, the number of solved instances being quite distributed around the bisector.
-
-%   \begin{figure}
-%   \centering
-%   \begin{minipage}[c]{.46\linewidth}
-%       \input{benchs/backtracksPlots/benchBacktracksBlueRed_p1.tikz}
-%   \end{minipage} \hfill
-%   \begin{minipage}[c]{.46\linewidth}
-%       \input{benchs/timesPlots/benchTimesLogBlueRed_p1.tikz}
-%   \end{minipage}
-%   \caption{Comparison of the required number of backtracks and resolution time with p=1.0}
-%   \label{benchCloudPoints}
-%   \end{figure}
-  
-%   \begin{figure}
-%   \centering
-%   \begin{minipage}[c]{.46\linewidth}
-%       \input{benchs/backtracksPlots/benchBacktracks_p075.tikz}
-%   \end{minipage} \hfill
-%   \begin{minipage}[c]{.46\linewidth}
-%       \input{benchs/timesPlots/benchTimes_p075.tikz}
-%   \end{minipage}
-%   \caption{Comparison of the required number of backtracks and resolution time with p=0.75}
-%   \label{benchCloudPoints075}
-%   \end{figure}
-  
-%   \begin{figure}
-%   \centering
-%   \begin{minipage}[c]{.46\linewidth}
-%       \input{benchs/backtracksPlots/benchBacktracks_p066.tikz}
-%   \end{minipage} \hfill
-%   \begin{minipage}[c]{.46\linewidth}
-%       \input{benchs/timesPlots/benchTimes_p066.tikz}
-%   \end{minipage}
-%   \caption{Comparison of the required number of backtracks and resolution time with p=0.66}
-%   \label{benchCloudPoints066}
-%   \end{figure}
-  
-%   \begin{figure}
-%   \centering
-%   \begin{minipage}[c]{.46\linewidth}
-%       \input{benchs/backtracksPlots/benchBacktracks_p05.tikz}
-%   \end{minipage} \hfill
-%   \begin{minipage}[c]{.46\linewidth}
-%       \input{benchs/timesPlots/benchTimes_p05.tikz}
-%   \end{minipage}
-%   \caption{Comparison of the required number of backtracks and resolution time with p=0.5}
-%   \label{benchCloudPoints05}
-%   \end{figure}
-  
-%   \begin{figure}
-%   \centering
-%   \begin{minipage}[c]{.46\linewidth}
-%       \input{benchs/backtracksPlots/benchBacktracks_p033.tikz}
-%   \end{minipage} \hfill
-%   \begin{minipage}[c]{.46\linewidth}
-%       \input{benchs/timesPlots/benchTimes_p033.tikz}
-%   \end{minipage}
-%   \caption{Comparison of the required number of backtracks and resolution time with p=0.33}
-%   \label{benchCloudPoints033}
-%   \end{figure}
-  
-%   \begin{figure}
-%   \centering
-%   \begin{minipage}[c]{.46\linewidth}
-%       \input{benchs/backtracksPlots/benchBacktracks_p033_withRefresh.tikz}
-%   \end{minipage} \hfill
-%   \begin{minipage}[c]{.46\linewidth}
-%       \input{benchs/timesPlots/benchTimes_p033_withRefresh.tikz}
-%   \end{minipage}
-%   \caption{Comparison of the required number of backtracks and resolution time with p=0.33 with refresh}
-%   \label{benchCloudPoints033Refresh}
-%   \end{figure}
-  
   
 
 In conclusion, on all these experiments, there is no clear dominance of the PQZ estimator over our upper bound, when they are used inside a $maxSD$ heuristic, in terms of solving efficiency. Nevertheless, we observe that there is a clear difference between them, when they are used to find an instantiation order. In addition, we also observed that the bug in the PQZ bound indeed happens, in which case the presumed upper bound gives a value below the exact number of solutions. In the end, the benchmark is conclusive on this precise matter: the PQZ estimator and our Corrected bound are not equivalent, although using them in $maxSD$ does not reveal this on the solving time.
