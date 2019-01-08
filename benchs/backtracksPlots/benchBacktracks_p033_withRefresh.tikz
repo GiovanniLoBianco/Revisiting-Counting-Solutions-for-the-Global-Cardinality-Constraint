@@ -5,7 +5,7 @@
     \foreach \x/\xtext in {0/0,2/6,4/42,6/273,8/1770, 10/11482}
         \draw (\x cm,1pt) -- (\x cm,-3pt)
             node[anchor=north] {$\xtext$};
-    \foreach \y/\ytext in {0/0,2/22,4/479,6/10472,8/229087, 10/5011872}
+    \foreach \y/\ytext in {0/0,2/6,4/42,6/273,8/1770, 10/11482}
         \draw (1pt,\y cm) -- (-3pt,\y cm) node[anchor=east] {$\ytext$};
     \node[below=1cm] at (x axis mid) {a. Nb. of backtracks for PQZ estimator};
     \node[rotate=90] at (-2,10) {Nb. of backtracks for the corrected estimator};

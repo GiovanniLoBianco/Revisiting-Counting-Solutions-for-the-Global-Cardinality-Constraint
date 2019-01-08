@@ -1379,7 +1379,6 @@ In this subsection, we compare the instantiations order given by the former boun
 \end{example}
 
 In order to measure how different is the behavior of these estimators within $maxSD$, we will use two measures of the similarity between two instantiation orders:
-\noteGilles{Est-ce que ce sont des mesures maison? Si on considère pour chaque variable ses densités de solution comme une distribution discrète, il y a quelques mesures standard de similitude qu'on peut utiliser, dont la divergence de Kullback-Leibler. On prendrait ensuite la moyenne de cette divergence sur l'ensemble des variables.}
 \begin{itemize}
 \item[-] $m_{LP}(I_1, I_2)$ : the length of the common prefix between the instantiation order $I_1$ and $I_2$. The first instantiations are more important. We want to measure how many choices will be common in a row at the beginning. This measure is then normalized, dividing it by $n$.
 
@@ -1499,8 +1498,6 @@ Also, $maxSD$ is a strategy that choose the assignment with the highest density.
 
 In this subsection, we have shown how to compare the influence of different number of solutions estimators within $maxSD$ on the instantiations ordering, and we have shown that the PQZ bound and its correction behave in a different way.
 
-\noteGilles{Puisque maxSD ne s'intéresse vraiment qu'à l'affectation correspondant à la densité la plus élevée, il serait bon d'indiquer la proportion d'exemplaires où chaque estimateur choisirait la même affectation (et en tenant compte des densités max à égalité).}
-
 \subsection{Performance analysis on generated instances}
 \label{experimentalPerformance}
 
@@ -1508,9 +1505,8 @@ In this subsection we analyze the performance of each estimator within the $maxS
 
 \subsubsection{Generation of random CSPs}
 
-Let $n$ be the number of variables and $m$ the number of values. We consider that each variable can take any value, that is $\forall x_i \in X, D_i = \lbrace 0, \ldots, m-1 \rbrace$, thus the associated Value Graph is complete. Then, we add $n_C$ global cardinality constraints to this CSP. 
-\noteGilles{puisque nous avons déjà $n$, $n_C$ ressemble à un produit; choisir une autre notation à une seule lettre}
-The scope of each $gcc$ is chosen randomly : each variable has a $50\%$ chance to be picked. For each $gcc$, as the value graph is complete, we must generate occurrences constraint for every value $0, \ldots, m-1$. We are also given a tightness $\tau$, which defines the length of every occurrence interval of each value. Let $\lbrace x_{i_1}, \ldots, x_{i_q}\rbrace$ be the scope of one $gcc$, then the length of every occurrence interval of this $gcc$ is $\tau \cdot q$, rounded to the nearest integer. The generated $gcc$ are not trivially unsatisfiable, as we also ensure that the generated occurrence intervals, $[l_j, u_j]$, are such that:
+Let $n$ be the number of variables, $m$ the number of values and $p$, the edge density of the Value Graph. Each value $y_j \in Y$ have a probability $p$ to be in $D_i$, for each variable $x_i$. Then, we add $n_C$ global cardinality constraints to this CSP. 
+The scope of each $gcc$ is chosen randomly : each variable has a $50\%$ chance to be picked. We are also given a tightness $\tau$, which defines the length of every occurrence interval of each value. Let $\lbrace x_{i_1}, \ldots, x_{i_q}\rbrace$ be the scope of one $gcc$, then the length of every occurrence interval of this $gcc$ is $\tau \cdot q$, rounded to the nearest integer. Once the lenght is set, the interval is chosen randomly among every possible interval with such a length. The generated $gcc$ are not trivially unsatisfiable, as we also ensure that the generated occurrence intervals, $[l_j, u_j]$, are such that:
 
 \begin{equation*}
 	\sum_{j=1}^m l_j \leq q \leq \sum_{j=1}^m u_j
@@ -1524,27 +1520,73 @@ We also ensure that any scope of a $gcc$ is not included in another $gcc$. Indee
 
 We generated several random CSP, with the method described above with the following parameters : $n=20, m=20$, $\tau \in [0.1,1]$ by step of $0.1$ and $n_C \in [2,10]$ by step of 1. For each couple $(\tau, n_C)$, we generate 50 random instances for a total of 4500 instances. We solve each instance with two different strategies: $maxSD$ with the PQZ bound and $maxSD$ with the corrected bound. The instances and the strategies are implemented in Choco solver \cite{chocoSolver} and we set, for each resolution, the time limit to 1 min and run on a 2.2GHz Intel Core i7 with 2.048GB.
 
-The $maxSD$ heuristic proposes to compute an estimator of the solution density, for each possible remaining instantiation, each time a fixed point is reached. This is a very costly strategy. Here, we will only compute and store the solution densities in the beginning of the search and each time we reach a fixed point, we will refer to them and choose the instantiation that led to the highest solution density at the beginning of the search and that is still available.
-\noteGilles{Puisque tous les domaines sont initialement complets, les densités calculées à la racine ne fournissent probablement pas d'information discriminante. D'autres heuristiques de branchement font sans doute tout aussi bien dans de telles circonstances?
-Il faudrait au moins retirer des valeurs des domaines initiaux.}
-\noteGilles{Pour l'efficacité, ce que nous avons proposé dans notre article à CPAIOR'18 est de recalculer seulement lorsque les domaines des variables dans la portée d'une contrainte ont suffisamment changé, mesuré simplement comme la somme de la taille des domaines.}
-In Table \ref{nbSolved}, we give the number of instances that have been proved satisfiable or unsatisfiable by $maxSD$ with both estimators. For a given number of constraints, it seems that instances whose $gcc$ has a tightness between 0.3 and 0.8 are slightly harder than the other. This can be explained by the fact that, if the constraints are tighter, then it is easier to prove unsatisfiability, and if they are less tight, it is easier to find a solution. Though, for a given tightness, the number of constraints have a bigger influence on the instances difficulty and hardest instances seems to be instances with around 8 $gcc$. In the generated instances, the hardest instances are for the couple $(\tau = 0.6, n_C = 8)$.
+The $maxSD$ heuristic proposes to compute an estimator of the solution density, for each possible remaining instantiation, each time a fixed point is reached. This is a very costly strategy. Here, we will only compute and store the solution densities in the beginning of the search and each time we reach a fixed point, we will refer to them and choose the instantiation that led to the highest solution density at the beginning of the search and that is still available.  \major{We also thought about updating the solution densities each time the size of the domains have decreased enough (have reached a certain threshold), like proposed in (REF). This strategy is not effective on our generated problem, so we have preferred not to run it to gain more time.}
 
-In total, with the PQZ bound, we are able to solve 4370 instances over 4500, against 4248 instances for the corrected bound. The results are very comparable, even if the PQZ bound seems slightly better than its correction.
+\input{benchs/tableNbSolved/nbSolved_p1.tex}
+\input{benchs/tableNbSolved/nbSolved_p066.tex}
+\input{benchs/tableNbSolved/nbSolved_p033.tex}
+
+In Table \ref{nbSolved1}, we give the number of instances that have been proved satisfiable or unsatisfiable by $maxSD$ with both estimators, for an edge density of $p=1$, that is, the Value Graph is complete. For a given number of constraints, it seems that instances whose $gcc$ has a tightness between 0.3 and 0.8 are slightly harder than the other. This can be explained by the fact that, if the constraints are tighter, then it is easier to prove unsatisfiability, and if they are less tight, it is easier to find a solution. Though, for a given tightness, the number of constraints have a bigger influence on the instances difficulty and hardest instances seems to be instances with around 8 $gcc$. In the generated instances, the hardest instances are for the couple $(\tau = 0.6, n_C = 8)$. On these instances, with the PQZ bound, we are able to solve 4370 instances over 4500, against 4248 instances for the corrected bound. The results are very comparable, even if the PQZ bound seems slightly better than its correction.
+
+In Table \ref{nbSolved066} and Table \ref{nbSolved033}, we did the same for an edge density of $p=0.66$ and $p=0.33$. For $p=0.66$, the results are much more in favour of the corrected bound. If we look at the row "$\tau=0.9$", for $n_C=8$, PQZ estimator is able to solve 33 instances, against 40 instances for the correction, and for $n_C=9$, PQZ estimator solved 28 instances, while its correction solved 39 instances. More generally, the PQZ estimator solved 4304 instances and its correction, 4354 instances. As for $p=0.33$, PQZ estimator solved 4497 instances and its correction solved every instance. Almost every instance is solved with a very low density, because the domains are sparser, so there are much less instantiations to test during the computation of the estimators.
+
+To conclude on these tables, when the Value Graph is complete, PQZ estimator gives slightly better results, but when the domain are not uniform, the corrected bound solves more instances. It seems that the correction is able to catch more the difference among the domains.
 
 % In Table \ref{nbBacktracks} and Table \ref{resolutionTimes}, we present the number of backtracks and resolution times (in s) that have been required in average to solve each instance. It seems that the PQZ estimator performs slightly better than its correction in average. If we look at the couple $(\tau = 0.6, n_C = 8)$, the corrected bound needed less backtracks and less time to solve the corresponding instances, but globally, it does not seem like one estimator outperforms the other one. 
 
-We now focus only on the instances that have been solved by both estimators. In Figure \ref{benchCloudPoints}a we compare the required number of backtracks for each instance that have been solved (proved satisfiable or unsatisfiable) with both estimators. Blue dots represent the satisfiable instances and red ones represent the unsatisfiable instances. We observe that there are a lot of red dots near the first bisector, which means that unsatisfiable instances roughly require the same number of backtracks with both estimators. For 80\% of the unsatisfiable instances, the ratio of the number of backtracks between the two estimators is inferior to 3.1 (inside the interval delimited by dots on Fig. \ref{benchCloudPoints}). %The blue dots are nearly equally distributed on both sides of the bisector. 
-On the satisfiable instances, there are 660 blue points over bisector against 374 below. The PQZ estimator obtains better results on these satisfiable instances. 
-%Some satisfiable instances are solved without performing any backtrack for one estimator, while it takes more backtracks for the other estimator. 
-There are 179 satisfiable instances that are solved without backtracking for the PQZ estimator (represented by the blue dots on the ordinate axis, excepted the origin). And there are 88 satisfiable instances that require no backtrack for the corrected estimator. There are also 965 blue points and 451 red points at the origin, in which case the corresponding instances were solved by propagation, without backtracking.
+%\begin{figure}
+%   \centering
+%   \begin{minipage}[c]{.46\linewidth}
+%       \input{benchs/backtracksPlots/benchBacktracksBlueRed_p1.tikz}
+%   \end{minipage} \hfill
+%   \begin{minipage}[c]{.46\linewidth}
+%       \input{benchs/timesPlots/benchTimesLogBlueRed_p1.tikz}
+%   \end{minipage}
+%   \caption{Comparison of the required number of backtracks and resolution time with p=1.0}
+%   \label{benchCloudPointsp1}
+%\end{figure}
 
-%XXX Quantifier les points rouges dans les zones : noire, au dessus hors zone noire, au dessous hors zone noire, axes et origine.
+\begin{figure}
+   \centering
+   \begin{minipage}[c]{.46\linewidth}
+       \input{benchs/backtracksPlots/benchBacktracks_p066.tikz}
+   \end{minipage} \hfill
+   \begin{minipage}[c]{.46\linewidth}
+       \input{benchs/timesPlots/benchTimes_p066.tikz}
+   \end{minipage}
+   \caption{Comparison of the required number of backtracks and resolution time with p=0.66}
+   \label{benchCloudPointsp066}
+\end{figure}
+
+%\begin{figure}
+%   \centering
+%   \begin{minipage}[c]{.46\linewidth}
+%       \input{benchs/backtracksPlots/benchBacktracks_p033.tikz}
+%   \end{minipage} \hfill
+%   \begin{minipage}[c]{.46\linewidth}
+%       \input{benchs/timesPlots/benchTimes_p033.tikz}
+%   \end{minipage}
+%   \caption{Comparison of the required number of backtracks and resolution time with p=0.33}
+%   \label{benchCloudPointsp033}
+%\end{figure}
+
+We now focus only on the instances that have been solved by both estimators. In Figure \ref{benchCloudPointsp1}a, we compare the required number of backtracks for each instance that have been solved (proved satisfiable or unsatisfiable) with both estimators for the edge density $p=1$. Blue dots represent the satisfiable instances and red ones represent the unsatisfiable instances. If a point is below the bisector, it means that it has required more backtracks (or time) for the PQZ estimator than its correction. 
+
+We observe that there are a lot of red dots near the first bisector, which means that unsatisfiable instances roughly require the same number of backtracks with both estimators. For 80\% of the unsatisfiable instances, the ratio of the number of backtracks between the two estimators is inferior to 3.0 (inside the interval delimited by dots on Fig. \ref{benchCloudPointsp1}). Also there are 167 red points above the 80\% area and 154 below. The performance of both estimator on unsatisfiable instances are very similar. On the satisfiable instances, there are 635 blue points over bisector against 381 below. The PQZ estimator obtains better results on these satisfiable instances. There are 179 satisfiable instances that are solved without backtracking for the PQZ estimator (represented by the blue dots on the ordinate axis, excepted the origin). And there are 88 satisfiable instances that require no backtrack for the corrected estimator. There are also 965 blue points and 451 red points at the origin, in which case the corresponding instances were solved by propagation, without backtracking.
+
+On Figure \ref{benchCloudPointsp1}b, we compare the resolution time for each instance that has been solved with both estimators in a similar way. For some instances, it is very quick to prove satisfiability or unsatisfiability: almost 15\% (FAUX) of the instances require less than 0.1s to be solved. Again, we  observe that the unsatisfiable instances are closer to the bisector : 80\% of the unsatisfiable instances are such that the ratio between the solving time with PQZ and the solving time with its correction is inferior to 2.4 . There are 159 red points above and 181 below the 80\% area. As for the satisfiable instances, they are again more widely distributed. There are 839 blue points below the bisector and 1160 above. Also there are 480 red points and zero blue points at the origin. This can be explained by the fact that, satisfiable instances at least require to instantiate  every variable, which takes times. 
+
+
 %XXX Distinction sat / unsat : l'heuristique est faite plutôt pour les sat. Sur les problèmes unsat, c'est quasi pareil pour les deux heuristiques.
 %XXX Sur les problèmes sat : c'est ce pour quoi est fait l'heuristique. PQZ est un estimateur, pas une borne, donc dans le cas où il y a beaucoup de solutions il "force" plus que la borne. Utilisé comme estimateur, il conserve un grand intérêt heuristique.
 
+We did the same for edge density $p=0.66$ and $p=0.33$ in Figure \ref{benchCloudPointsp066} and Figure \ref{benchCloudPointsp033}. First thing to notice is that theses instances generally require less backtracks and less time. On Figure \ref{benchCloudPointsp066}a, unsatisfiable instances are again close to the bisector: 80\% of the unsatisfiable instances are such that the ratio between the solving time with PQZ and the solving time with its correction is inferior to 2.3. There are 255 red points below the 80\% area and 169 above. Also there are 320 blue points above and 393 blue points below the bisector. Finally, there are 1402 blue points and 1125 red points at the origin.
+On Figure \ref{benchCloudPointsp066}b, we notice that there are a big density of points in bottom-left corner:
 
-On Figure \ref{benchCloudPoints}b, we compare the resolution time for each instance that has been solved with both estimators in a similar way. For some instances, it is very quick to prove satisfiability or unsatisfiability: almost 15\% of the instances require less than 0.1s to be solved. Again, we  observe that the unsatisfiable instances are closer to the bisector : 80\% of the unsatisfiable instances are such that the ratio between the solving time with PQZ and the solving time with its correction is inferior to 2.3 . As for the satisfiable instances, they are again more widely distributed. There are 839 blue points below the bisector and 1160 above. %To conclude on this benchmark, the two estimators have very similar performance. The PQZ estimator is a little better on satisfiable instances, but globally, it does not seem like one estimator outperforms the other one.
+
+
+
+
 
 Our conclusions on this benchmark are the following. As a preliminary remark, both heuristics are meant to tune the search toward areas with many solutions (or a high solution density for the $gcc$ constraints). The heuristics are not meant to provoke failures, hence, there are not suited to unsatisfiable instances. In practice, we observe on the benchmark that both heuristics roughly behave the same on unsatisfiable instances, with both a number of backtracks and a resolution time with a similar ratio (inside the black lines) on 80\% of the instances (red dots). On the satisfiable instances (blue dots), we observe that the PQZ heuristic is better than the Corrected heuristic. As proved in the previous sections, the PQZ is not based on a bound, but our experiments show that in practice it can be considered as an estimator of the solution density. In practice, on our benchmark, this estimator seems to be useful to guide the search. 
 %
