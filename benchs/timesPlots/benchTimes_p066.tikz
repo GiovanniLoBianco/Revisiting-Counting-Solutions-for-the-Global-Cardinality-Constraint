@@ -1,3 +1,4 @@
+\beginpgfgraphicnamed{timesp066}
 \begin{tikzpicture}[only marks, y=.5cm, scale=0.6, every node/.style={scale=0.6}]
     \draw[->] (0,0) -- coordinate (x axis mid) (10.5,0);
     \draw[->] (0,0) -- coordinate (y axis mid)(0,21);
@@ -4297,8 +4298,4 @@
 
 \end{tikzpicture}
 
- 	
-
-
-
-\end{tikzpicture}
+\endpgfgraphicnamed

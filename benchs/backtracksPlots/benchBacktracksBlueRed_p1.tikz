@@ -1,3 +1,5 @@
+\beginpgfgraphicnamed{backtracksp1}
+
 \begin{tikzpicture}[only marks, y=.5cm, scale=0.6, every node/.style={scale=0.6}]
    % \draw plot[mark=*,xshift=-6cm] file {ScatterPlotExampleData.data};
     \draw[->] (0,0) -- coordinate (x axis mid) (10.5,0);
@@ -3314,12 +3316,4 @@
 \end{tikzpicture}
 
 
-
-
-
-
-
-
-
-
-\end{tikzpicture}
+\endpgfgraphicnamed
