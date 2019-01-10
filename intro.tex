@@ -1,0 +1,21 @@
+%!TEX root = main.tex
+
+\paragraph{}
+Model counting is a fundamental problem in artificial intelligence. It consists in counting the number of solutions of a given problem and it has numerous applications such as probabilistic reasoning and machine learning \cite{GomesHSS07,DBLP:journals/corr/MeelVCFSFIM15}. 
+Counting solutions of a problem can be helpful when exploring the structure of the solution space~\cite{AI09}.
+
+Search heuristics have been intensively studied during the last decades within constraint programming (CP)~\cite{BoussemartHLS04,Refalo04,MichelH12}. While most of these approaches have used generic and/or problem-specific search strategies, the counting\--based search heuristics~\cite{PesantQZ12} work directly with the combinatorial structure of the problem. The key idea is to guide the resolution process toward the most promising part of the search space according to the number of remaining solutions. 
+Obviously evaluating the number of solutions of a search space is at least as hard as the problem itself.
+\minor{By} relaxing the problem, the authors consider the counting problem for each constraint separately, guiding the exploration toward areas that contain a high number of solutions in individual constraints. In other words, such a strategy bets on the future of the search space exploration.
+%For example, one of these heuristics consists, at each decision node of the search tree, in choosing the instantiation that likely leaves the most solutions. Computing exactly the number of solutions is hard in general, this is why we use approximation or bounds. In~\cite{PesantQZ12}, the authors introduces an upper bound on the number of solutions for several constraints.
+
+This paper focuses on the global cardinality constraint ($gcc$)~\cite{Regin96}. 
+Such a constraint restricts the number of times a value is assigned to a variable to be in a given integer interval. It has been known to be very useful in many real-life problems derived from the generalized assignment problems~\cite{Ford}, such as scheduling, timetabling, or resource allocation. 
+%It consists in instantiating a set of variables such as the number of occurrences of each taken value is between two given bounds. 
+In~\cite{PesantQZ12}, the authors state an upper bound on the number of solutions for an instance of $gcc$, as well as exact evaluations for other constraints like \emph{regular} or \emph{knapsack}. This paper shows that this upper bound is actually not correct and presents \major{a correction that uses} a dedicated non\--linear minimization problem.  
+
+\major{
+	The corrected bound is then adapted for counting-based search and its behavior is compared to the first bound given in ~\cite{PesantQZ12}. This paper concludes with an experimental analysis of the efficiency of both estimators within the search heuristic that aim at exploring first the area where there are likely more solutions.
+}
+
+\paragraph{Outline.} Section~\ref{previous} first introduces the required constraint programming (CP) background as well as the required material in graph and matching theory. Section \ref{errorStateoftheart} recalls the method proposed by~\cite{PesantQZ12} to compute an upper bound on the number of solutions for an instance of $gcc$ before presenting a counter-example of it. Section~\ref{calculatoryApproach} presents a direct calculation method based on a non\--linear minimization problem \major{and Section \ref{algoComparison} gives a time complexity study of the computation of this corrected upper bound. Finally Section \ref{expe} presents an experimental evaluation of the new upper bound within Counting-Based Search strategies.}
