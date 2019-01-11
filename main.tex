@@ -1553,177 +1553,26 @@ Table \ref{nbSolvedTau} (resp. Table \ref{nbSolvednC}) shows the number of solve
 
 We now focus only on the instances that have been solved by both estimators. In Figure \ref{benchCloudPointsp1}, Figure \ref{benchCloudPointsp066} and \ref{benchCloudPointsp033}, we compare the required number of backtracks and the resolution time for each instance that have been solved (proved satisfiable or unsatisfiable) with both estimators for the edge density $p=1.0$, $p=0.66$ and $p=0.33$. Blue dots represent the satisfiable instances and red ones represent the unsatisfiable instances. The area delimited by the black dotted lines represent the instances for which the ratio between the required number of backtracks (or resolution time) for PQZ and its correction is between $\frac{1}{1.5}$ and $1.5$. In other words, we consider that, for the instances inside this area, both estimators have very comparable performances. If a point is below this area, it means that the corrected estimator has better performance, and on the opposite, if a point is above the area, the PQZ estimator has better performance.
 
-For $p=1.0$, 80.2\% of the instances have been solved by both estimator. On Figure \ref{benchCloudPointsp1}a, 60.1\% of solved by both instances are inside the dotted area. The performance, in terms of number of backtracks, of both estimators on theses instances are very similar. There 16.1\% points below the area and 23.8\% points above. The PQZ estimator seems slightly better on these instances. More precisely, 67.6\% of unsatisfiable instances are inside the dotted area, 15.4\% below and 17.1\% above. As for satisfied instances, there are 54.1\% blue points inside the dotted area, 16.8\% below and 29.2\% above. For unsatisfiable instances, the two estimators have equivalent performances, but PQZ estimator seems to have better performance on these satisfiable instances. If we observe Figure \ref{benchCloudPointsp1}b, 70.6\% of red points and 70.4\% of blue points are inside the dotted area. Also, 10.1\% of blue points are below the area and 19.3\% are above and 14.2\% of red points are below and 15.4\% are above. In terms of resolution time, both estimators have almost equivalent performance, but again, PQZ estimator is slightly better on satisfiable instances.
+For $p=1.0$, 80.2\% of the instances have been solved by both estimator. On Figure \ref{benchCloudPointsp1}a, 60.1\% of solved instances by both estimators are inside the dotted area. The performance, in terms of number of backtracks, of both estimators on theses instances are very similar. There are 16.1\% points below the area and 23.8\% points above. The PQZ estimator seems slightly better on these instances. More precisely, 67.6\% of unsatisfiable instances are inside the dotted area, 15.4\% below and 17.1\% above. As for satisfied instances, there are 54.1\% blue points inside the dotted area, 16.8\% below and 29.2\% above. For unsatisfiable instances, the two estimators have equivalent performances, but PQZ estimator seems to have better performance on these satisfiable instances. If we observe Figure \ref{benchCloudPointsp1}b, 70.6\% of red points and 70.4\% of blue points are inside the dotted area. Also, 10.1\% of blue points are below the area and 19.3\% are above and 14.2\% of red points are below and 15.4\% are above. In terms of resolution time, both estimators have almost equivalent performance, but again, PQZ estimator is slightly better on satisfiable instances.
 
+For $p=0.66$, 94.9\% of the instances have been solved by both estimator. On Figure \ref{benchCloudPointsp066}a, 71.2\% of solved instances by both estimators are inside the dotted area. The performance, in terms of number of backtracks, of both estimators on theses instances are again very similar, even more for the edge density. There 16.1\% points below the area and 12.7\% points above. Here, the corrected estimator seems to have slightly better performance. There is no clear difference here in the behaviour of unsatisfiable and satisfiable instances: 17.0\% of blue points and 15.2\% of red points below the dotted area and 13.3\% of blue points and 12.0\% of red points above. On Figure \ref{benchCloudPointsp066}b, 77.7\% of red points and 78.1\% of blue points are inside the dotted area. Also, 10.1\% of the instances are above the area and 11.8\% are below. In terms of resolution time, both estimators have very similar performance. 
 
-%We observe that there are a lot of red dots near the first bisector, which means that unsatisfiable instances roughly require the same number of backtracks with both estimators. For 80\% of the unsatisfiable instances, the ratio of the number of backtracks between the two estimators is inferior to 3.0 (inside the interval delimited by dots on Fig. \ref{benchCloudPointsp1}). Also there are 167 red points above the 80\% area and 154 below. The performance of both estimator on unsatisfiable instances are very similar. As for the satisfiable instances, there are 635 blue points over bisector against 381 below. The PQZ estimator obtains better results on these satisfiable instances. There are 179 satisfiable instances that are solved without backtracking for the PQZ estimator (represented by the blue dots on the ordinate axis, excepted the origin). And there are 88 satisfiable instances that require no backtrack for the corrected estimator. There are also 965 blue points and 451 red points at the origin, in which case the corresponding instances were solved by propagation, without backtracking.
+For $p=0.33$, 99.9\% of the instances have been solved by both estimator. On Figure \ref{benchCloudPointsp033}a, 86.7\% of solved instances by both estimators are inside the dotted area. For most instances, the performances of both estimators are more similar as the density get higher. There are 9.7\% of the instances below the area and 3.5\% above. The correction performs a little better on this density too.  On Figure \ref{benchCloudPointsp033}b, we observe that there are a little more points in the bottom part of the plot. It seems like the lower the edge density, the better are the performance of the correction over PQZ estimator.
 
-%On Figure \ref{benchCloudPointsp1}b, we compare the resolution time for each instance that has been solved with both estimators in a similar way. For some instances, it is very quick to prove satisfiability or unsatisfiability: almost 15\% (FAUX) of the instances require less than 0.1s to be solved. Again, we  observe that the unsatisfiable instances are closer to the bisector : 80\% of the unsatisfiable instances are such that the ratio between the solving time with PQZ and the solving time with its correction is inferior to 2.4 . There are 159 red points above and 181 below the 80\% area. As for the satisfiable instances, they are again more widely distributed. There are 839 blue points below the bisector and 1160 above. Also there are 480 red points and zero blue points at the origin. This can be explained by the fact that, satisfiable instances at least require to instantiate  every variable, which takes times. 
+Our conclusions on this benchmark are the following. As a preliminary remark, both heuristics are meant to tune the search toward areas with many solutions (or a high solution density for the $gcc$ constraints). The heuristics are not meant to provoke failures, hence, there are not suited to unsatisfiable instances. In practice, we observe on the benchmark that both heuristics roughly behave the same on unsatisfiable instances, with both a number of backtracks and a resolution time with a similar ratio. In general, we observe that the PQZ heuristic is slightly better than the corrected heuristic for the edge density $p=1.0$, and for lower density, the corrected heuristic performs a bit better. Our assumption is that the corrected estimator is a little more able to catch the heterogeneity of the domains. As proved in the previous sections, the PQZ is not based on a bound, but our experiments show that in practice it can be considered as an estimator of the solution density. In practice, on our benchmark, this estimator seems to be useful to guide the search. 
 
-
-%XXX Distinction sat / unsat : l'heuristique est faite plutôt pour les sat. Sur les problèmes unsat, c'est quasi pareil pour les deux heuristiques.
-%XXX Sur les problèmes sat : c'est ce pour quoi est fait l'heuristique. PQZ est un estimateur, pas une borne, donc dans le cas où il y a beaucoup de solutions il "force" plus que la borne. Utilisé comme estimateur, il conserve un grand intérêt heuristique.
-
-%We did the same for edge density $p=0.66$ and $p=0.33$ in Figure \ref{benchCloudPointsp066} and Figure \ref{benchCloudPointsp033}. First thing to notice is that theses instances generally require less backtracks and less time. On Figure \ref{benchCloudPointsp066}a, unsatisfiable instances are again close to the bisector: 80\% of the unsatisfiable instances are such that the ratio between the solving time with PQZ and the solving time with its correction is inferior to 2.3. There are 255 red points below the 80\% area and 169 above. Also there are 320 blue points above and 393 blue points below the bisector. Finally, there are 1402 blue points and 1125 red points at the origin.
-%On Figure \ref{benchCloudPointsp066}b, we notice that there are a big density of points in bottom-left corner:
-
-
-
-
-
-
-Our conclusions on this benchmark are the following. As a preliminary remark, both heuristics are meant to tune the search toward areas with many solutions (or a high solution density for the $gcc$ constraints). The heuristics are not meant to provoke failures, hence, there are not suited to unsatisfiable instances. In practice, we observe on the benchmark that both heuristics roughly behave the same on unsatisfiable instances, with both a number of backtracks and a resolution time with a similar ratio (inside the black lines) on 80\% of the instances (red dots). On the satisfiable instances (blue dots), we observe that the PQZ heuristic is better than the Corrected heuristic. As proved in the previous sections, the PQZ is not based on a bound, but our experiments show that in practice it can be considered as an estimator of the solution density. In practice, on our benchmark, this estimator seems to be useful to guide the search. 
-%
-We observe that the heuristic based on the PQZ estimator pushes the search to choose different assignments of our correction based on an upper bound (cf Figures~\ref{similarityLenghtCommonPrefix} and~\ref{similarityWCS}). We assume that the quality of the PQZ results on the SAT instances is probably related to the fact that the artificial amplification of the PQZ estimator, to choose some assignment, still pushes the search into areas that most likely contain at least one solution.
-%
-However, in the end, no heuristic clearly dominates the other, the number of solved instances being quite distributed around the bisector.
-  
-
-In conclusion, on all these experiments, there is no clear dominance of the PQZ estimator over our upper bound, when they are used inside a $maxSD$ heuristic, in terms of solving efficiency. Nevertheless, we observe that there is a clear difference between them, when they are used to find an instantiation order. In addition, we also observed that the bug in the PQZ bound indeed happens, in which case the presumed upper bound gives a value below the exact number of solutions. In the end, the benchmark is conclusive on this precise matter: the PQZ estimator and our Corrected bound are not equivalent, although using them in $maxSD$ does not reveal this on the solving time.
+In conclusion, on all these experiments, there is no clear dominance of the PQZ estimator over our upper bound, when they are used inside a $maxSD$ heuristic, in terms of solving efficiency. The number of solved instances are quite distributed around the bisector. Nevertheless, we observe that there is a clear difference between them, when they are used to find an instantiation order. In addition, we also observed that the bug in the PQZ bound indeed happens, in which case the presumed upper bound gives a value below the exact number of solutions. In the end, the benchmark is conclusive on this precise matter: the PQZ estimator and our Corrected bound are not equivalent, although using them in $maxSD$ does not reveal this on the solving time.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Conclusion}
 
-\input{conclusion.tex}
+\major{\input{conclusion.tex}}
  
 
  
- 
 
-
-
-
-
-
-
-% \begin{table}[H]
-%   		\begin{tabular}{|c|c|c|c|c|c|c|}
-% \hline
-% $\tau \backslash n_C$ & 2 & 3 & 4 & 5 & 6 \\
-% \hline
-% $\tau$ = 0.1 & 16874/\textbf{16795} & \textbf{17093}/24798 & 46940/\textbf{41905} & \textbf{17765}/19948 & \textbf{65518}/78460 \\
-% \hline
-% $\tau$ = 0.2 & \textbf{1011}/1214 & \textbf{19971}/33476 & \textbf{9188}/17973 & 19493/\textbf{18515} & \textbf{73860}/75259 \\
-% \hline
-% $\tau$ = 0.3 & 736/\textbf{278} & 131877/\textbf{22725} & \textbf{53607}/88541 & \textbf{64864}/149811 & 122751/\textbf{59915} \\
-% \hline
-% $\tau$ = 0.4 & \textbf{17}/30 & \textbf{17772}/39408 & \textbf{38808}/111706 & \textbf{67338}/102362 & \textbf{49471}/107863 \\
-% \hline
-% $\tau$ = 0.5 & \textbf{648}/803 & 130661/\textbf{46689} & 40951/\textbf{22404} & 122356/\textbf{57701} & 223113/\textbf{97272} \\
-% \hline
-% $\tau$ = 0.6 & \textbf{4805}/10545 & \textbf{8635}/9190 & 37886/\textbf{31321} & \textbf{81963}/176339 & \textbf{57430}/143473 \\
-% \hline
-% $\tau$ = 0.7 & 5446/\textbf{2022} & \textbf{13569}/81122 & \textbf{29257}/121320 & \textbf{106917}/163715 & \textbf{64351}/124762 \\
-% \hline
-% $\tau$ = 0.8 & 13463/\textbf{704} & \textbf{67724}/100239 & \textbf{74152}/145502 & \textbf{24953}/63467 & \textbf{72835}/94480 \\
-% \hline
-% $\tau$ = 0.9 & \textbf{3053}/3354 & \textbf{19703}/44054 & 111617/\textbf{91500} & \textbf{68538}/125215 & \textbf{95945}/231803 \\
-% \hline
-% $\tau$ = 1.0 & \textbf{822}/5964 & \textbf{6264}/67525 & \textbf{50745}/155688 & \textbf{89871}/100491 & \textbf{17453}/45512 \\
-% \hline
-% \end{tabular}
-        
-%         \vspace{10pt}
-
-%     \begin{tabular}{|c|c|c|c|c|}
-% \hline
-% $\tau \backslash n_C$ & 7 & 8 & 9 & 10 \\
-% \hline
-% $\tau$ = 0.1 & 45809/\textbf{45564} & 25388/\textbf{23987} & \textbf{7234}/8807 & 2522/\textbf{2036} \\
-% \hline
-% $\tau$ = 0.2 & 146989/\textbf{127718} & \textbf{72564}/75276 & \textbf{82423}/121545 & 38540/\textbf{32194} \\
-% \hline
-% $\tau$ = 0.3 & 86875/\textbf{69420} & \textbf{45595}/49085 & \textbf{91121}/93349 & 34542/\textbf{29982} \\
-% \hline
-% $\tau$ = 0.4 & 136707/\textbf{98040} & 83497/\textbf{65517} & \textbf{21648}/24188 & \textbf{30850}/54515 \\
-% \hline
-% $\tau$ = 0.5 & \textbf{32642}/69050 & \textbf{96252}/110973 & 132173/\textbf{58807} & 60144/\textbf{59599} \\
-% \hline
-% $\tau$ = 0.6 & \textbf{41175}/52601 & 39161/\textbf{31454} & 73988/\textbf{63674} & \textbf{3171}/10922 \\
-% \hline
-% $\tau$ = 0.7 & 95958/\textbf{39342} & \textbf{83913}/127683 & \textbf{73196}/104150 & \textbf{71368}/93454 \\
-% \hline
-% $\tau$ = 0.8 & \textbf{98469}/143748 & \textbf{45162}/85131 & \textbf{61938}/95387 & 85792/\textbf{32468} \\
-% \hline
-% $\tau$ = 0.9 & \textbf{87347}/87640 & \textbf{62045}/78019 & 57122/\textbf{33778} & \textbf{56826}/89137 \\
-% \hline
-% $\tau$ = 1.0 & \textbf{30318}/167714 & \textbf{97745}/122929 & \textbf{104808}/112442 & \textbf{13880}/24393 \\
-% \hline
-% \end{tabular}
-%         \caption{Number of backtracks in average on solved instances for both estimators (PQZ/Corr.) for each couple $(\tau, n_C)$}
-%     \label{nbBacktracks}
-% 	\end{table}
-
-
-
-
-% \begin{table}[H]        
-%     \begin{tabular}{|c|c|c|c|c|c|c|c|}
-% \hline
-% $\tau \backslash n_C$ & 2 & 3 & 4 & 5 & 6 & 7\\
-% \hline
-% $\tau$ = 0.1 & 0.11/\textbf{0.1} & \textbf{0.29}/0.43 & 0.97/\textbf{0.9} & \textbf{0.64}/0.69 & \textbf{1.7}/2.27 & 1.4/\textbf{1.35} \\
-% \hline
-% $\tau$ = 0.2 & \textbf{0.02}/0.03 & \textbf{0.38}/0.61 & \textbf{0.28}/0.48 & 0.59/\textbf{0.45} & 2.56/\textbf{2.51} & 5.15/\textbf{4.62} \\
-% \hline
-% $\tau$ = 0.3 & 0.01/0.01 & 1.42/\textbf{0.25} & \textbf{1.08}/1.73 & \textbf{1.46}/3.89 & 3.8/\textbf{2.17} & 3.1/\textbf{2.52} \\
-% \hline
-% $\tau$ = 0.4 & 0.01/0.01 & \textbf{0.43}/0.91 & \textbf{0.57}/2.38 & \textbf{1.88}/2.58 & \textbf{1.61}/3.71 & 4.68/\textbf{3.21} \\
-% \hline
-% $\tau$ = 0.5 & 0.01/0.01 & 1.59/\textbf{0.93} & 0.92/\textbf{0.39} & 2.48/\textbf{1.29} & 6.26/\textbf{3.25} & \textbf{1.07}/2.78 \\
-% \hline
-% $\tau$ = 0.6 & \textbf{0.07}/0.08 & \textbf{0.09}/0.12 & 1.1/\textbf{0.47} & \textbf{1.59}/3.85 & \textbf{1.84}/2.52 & 1.87/\textbf{1.84} \\
-% \hline
-% $\tau$ = 0.7 & 0.09/\textbf{0.03} & \textbf{0.29}/1.59 & \textbf{0.79}/2.39 & \textbf{3.5}/4.56 & \textbf{2.73}/3.69 & 3.88/\textbf{1.38} \\
-% \hline
-% $\tau$ = 0.8 & 0.18/\textbf{0.02} & \textbf{0.93}/1.23 & 1.5/\textbf{1.43} & \textbf{0.62}/1.22 & \textbf{1.84}/2.59 & \textbf{3.51}/4.82 \\
-% \hline
-% $\tau$ = 0.9 & \textbf{0.06}/0.07 & \textbf{0.32}/0.66 & 1.97/\textbf{1.93} & \textbf{2.05}/3.07 & \textbf{2.72}/6.09 & \textbf{3.3}/3.48 \\
-% \hline
-% $\tau$ = 1.0 & \textbf{0.02}/0.05 & \textbf{0.08}/0.6 & \textbf{1.34}/3.97 & 2.53/\textbf{2.24} & \textbf{0.71}/1.24 & \textbf{1.08}/5.36 \\
-% \hline
-
-%     \end{tabular}
-    
-%     \vspace{10pt}
-
-% \begin{tabular}{|c|c|c|c|}
-% \hline
-% $\tau \backslash n_C$ & 8 & 9 & 10 \\
-% \hline
-% $\tau$ = 0.1 & 1.03/\textbf{1.01} & \textbf{0.34}/0.4 & 0.16/\textbf{0.14} \\
-% \hline
-% $\tau$ = 0.2 & 3.28/\textbf{3.19} & \textbf{3.98}/5.94 & 2.23/\textbf{1.93} \\
-% \hline
-% $\tau$ = 0.3 & \textbf{2.31}/2.65 & \textbf{2.65}/4.27 & 2.17/\textbf{2.12} \\
-% \hline
-% $\tau$ = 0.4 & 3.14/\textbf{2.63} & \textbf{1.06}/1.07 & \textbf{1.86}/3.29 \\
-% \hline
-% $\tau$ = 0.5 & 5.04/\textbf{4.71} & 6.71/\textbf{2.77} & \textbf{3.21}/3.5 \\
-% \hline
-% $\tau$ = 0.6 & 1.98/\textbf{1.15} & \textbf{3.42}/4.04 & \textbf{0.2}/0.68 \\
-% \hline
-% $\tau$ = 0.7 & \textbf{3.79}/5.44 & \textbf{3.39}/4.96 & \textbf{4.29}/5.71 \\
-% \hline
-% $\tau$ = 0.8 & \textbf{1.99}/4.02 & \textbf{3.36}/4.43 & 4.73/\textbf{1.92} \\
-% \hline
-% $\tau$ = 0.9 & \textbf{2.65}/3.25 & 3.09/\textbf{1.96} & \textbf{3.2}/5.35 \\
-% \hline
-% $\tau$ = 1.0 & \textbf{5.08}/5.51 & \textbf{4.91}/5.57 & \textbf{0.91}/1.73 \\
-% \hline
-
-% \end{tabular}
-     
-%         \caption{Resolution time (in s) in average on solved instances for both estimators (PQZ/Corr.) for each couple $(\tau, n_C)$}
-%     \label{resolutionTimes}
-    
-% 	\end{table}
- 
- 
-
- 
 \bibliography{jairbugfix}
 \bibliographystyle{theapa}
 
